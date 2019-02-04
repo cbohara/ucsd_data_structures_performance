@@ -42,6 +42,49 @@ public abstract class Document {
 		return tokens;
 	}
 	
+
+	/** Determine if last char is a given char
+	 * @param String word
+	 * @return boolean return true if last letter is 'e'
+	 */
+	private boolean isLastChar(String word, char c) {
+		char lastChar = word.charAt(word.length() - 1);
+		if (lastChar == c) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/** Determine index to stop checking if character is a vowel
+	 *  because a lone 'e' at the end of the word is not considered
+	 *  a vowel
+	 * @param String word
+	 * @return int representing index to stop iterating through word
+	 */
+	private int stopIndex(String word) {
+		if (isLastChar(word, 'e')) {
+			return word.length() - 1;
+		} else {
+			return word.length();
+		}
+	}
+
+	/** Determines if a character is a vowel
+	 * @param char letter to evaluate
+	 * @return boolean returns true if the letter is a vowel
+	 */
+	private boolean isVowel(char letter) {
+		char[] vowels = { 'a', 'e', 'i', 'o', 'u', 'y', 
+						  'A', 'E', 'I', 'O', 'U', 'Y' };
+		for (char c : vowels) {
+			if (letter == c) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	/** This is a helper function that returns the number of syllables
 	 * in a word.  You should write this and use it in your 
 	 * BasicDocument class.
@@ -62,12 +105,39 @@ public abstract class Document {
 	 *       is not considered a syllable unless the word has no other syllables. 
 	 *       You should consider y a vowel.
 	 */
-	protected int countSyllables(String word)
-	{
-		// TODO: Implement this method so that you can call it from the 
-	    // getNumSyllables method in BasicDocument (module 2) and 
-	    // EfficientDocument (module 3).
-	    return 0;
+	protected int countSyllables(String word) {
+		if (word.length() == 1 || word.length() == 2) {
+			return 1;
+		}
+
+		if (word.length() == 3 && isLastChar(word, 'e')) {
+			return 1;
+		}
+
+		int syllableCount = 0;
+		char firstChar = word.charAt(0);
+		char previousChar = firstChar;
+		char lastChar = word.charAt(word.length() - 1);
+		int stopIndex = stopIndex(word);
+		for (int i = 1; i < stopIndex; i++) {
+			char currentChar = word.charAt(i);
+			boolean currentCharIsVowel = isVowel(currentChar);
+			boolean previousCharIsVowel = isVowel(previousChar);
+			if (!isVowel(firstChar)) {
+				if (!previousCharIsVowel && currentCharIsVowel) {
+					syllableCount++;
+				}
+			} else {
+				if (previousCharIsVowel && !currentCharIsVowel) {
+					syllableCount++;
+				}
+			}
+			previousChar = currentChar;
+		}
+		if (isVowel(firstChar) && isVowel(lastChar) && !isLastChar(word, 'e')) {
+			syllableCount++;
+		}
+		return syllableCount;
 	}
 	
 	/** A method for testing

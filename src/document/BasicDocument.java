@@ -36,7 +36,8 @@ public class BasicDocument extends Document
 	{
 		//TODO: Implement this method in week 2 according to the comments above.  
 		// See the Module 2 support videos if you need help.
-	    return 0;
+		List<String> words = getTokens("[a-zA-Z]+");
+	    return words.size();
 	}
 	
 	/**
@@ -56,7 +57,8 @@ public class BasicDocument extends Document
 	{
 	    //TODO: Implement this method.  See the Module 2 support videos 
         // if you need help.
-        return 0;
+		List<String> sentences = getTokens("[^.!?]+");
+        return sentences.size();
 	}
 	
 	/**
@@ -81,7 +83,12 @@ public class BasicDocument extends Document
 		// expression for the syllable counting.  We recommend you implement 
 		// the helper function countSyllables in Document.java using a loop, 
 		// and then call it here on each word.
-        return 0;
+		int numSyllables = 0;
+		List<String> words = getTokens("[a-zA-Z]+");
+		for (String word : words) {
+			numSyllables += countSyllables(word);
+		}
+        return numSyllables;
 	}
 	
 	
@@ -91,7 +98,10 @@ public class BasicDocument extends Document
 	{
 		/* Each of the test cases below uses the method testCase.  The first 
 		 * argument to testCase is a Document object, created with the string shown.
-		 * The next three arguments are the number of syllables, words and sentences 
+		 * The next three arguments are the number of 
+		 * 	syllables
+		 * 	words
+		 * 	sentences 
 		 * in the string, respectively.  You can use these examples to help clarify 
 		 * your understanding of how to count syllables, words, and sentences.
 		 */
@@ -100,13 +110,14 @@ public class BasicDocument extends Document
 				16, 13, 5);
 		testCase(new BasicDocument(""), 0, 0, 0);
 		testCase(new BasicDocument("sentence, with, lots, of, commas.!  "
-		        + "(And some poaren)).  The output is: 7.5."), 15, 11, 4);
+	        + "(And some poaren)).  The output is: 7.5."), 15, 11, 4);
 		testCase(new BasicDocument("many???  Senteeeeeeeeeences are"), 6, 3, 2);
 		testCase(new BasicDocument("Here is a series of test sentences. Your program should "
-				+ "find 3 sentences, 33 words, and 49 syllables. Not every word will have "
-				+ "the correct amount of syllables (example, for example), "
-				+ "but most of them will."), 49, 33, 3);
+			+ "find 3 sentences, 33 words, and 49 syllables. Not every word will have "
+			+ "the correct amount of syllables (example, for example), "
+			+ "but most of them will."), 49, 33, 3);
 		testCase(new BasicDocument("Segue"), 2, 1, 1);
+		testCase(new BasicDocument("a"), 1, 1, 1);
 		testCase(new BasicDocument("Sentence"), 2, 1, 1);
 		testCase(new BasicDocument("Sentences?!"), 3, 1, 1);
 		testCase(new BasicDocument("Lorem ipsum dolor sit amet, qui ex choro quodsi moderatius, nam dolores explicari forensibus ad."),
