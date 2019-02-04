@@ -198,13 +198,12 @@ public abstract class Document {
 	}
 	
 	/** return the Flesch readability score of this document */
-	public double getFleschScore()
-	{
-	    // TODO: You will play with this method in week 1, and 
-		// then implement it in week 2
-	    return text.length();
+	public double getFleschScore() {
+		double numWords = getNumWords();
+		double numSentences = getNumSentences();
+		double numSyllables = getNumSyllables();
+		double wordsPerSentence = numWords / numSentences;
+		double syllablesPerWord = numSyllables / numWords;
+		return 206.835 - (1.015 * wordsPerSentence) - (84.6 * syllablesPerWord);
 	}
-	
-	
-	
 }

@@ -13,7 +13,7 @@ public class BasicDocumentGrader {
             System.out.println("Sentences, words, and syllables:");
             BufferedReader br = new BufferedReader(new FileReader("test_cases/mod1TestCases.txt"));
             String line;
-            PrintWriter out = new PrintWriter("grader_output/module1.part1.out", "utf-8");
+            PrintWriter out = new PrintWriter("test_cases/module1.part1.out", "utf-8");
             while ((line = br.readLine()) != null)
             {
                 BasicDocument doc = new BasicDocument(line);
@@ -27,7 +27,7 @@ public class BasicDocumentGrader {
             br.close();
 
             br = new BufferedReader(new FileReader("test_cases/mod1TestCases.txt"));
-            out = new PrintWriter("grader_output/module1.part2.out", "utf-8");
+            out = new PrintWriter("test_cases/module1.part2.out", "utf-8");
             while ((line = br.readLine()) != null)
             {
                 BasicDocument doc = new BasicDocument(line);
