@@ -1,22 +1,18 @@
 /* 
  * Implementation of insertion sort
- * Best case - 
- * Average case -
+ * Best case - O(n)
  *  Worse case - O(n^2)
  */
 package practice;
 
 public class InsertionSort {
 	public static int[] insertionSort(int[] values) {
+		int currentIndex;
 		for (int i = 1; i < values.length; i++) {
-			int currentIndex = i;
-			int compareIndex = i - 1;
-			while (compareIndex >= 0) {
-				if (values[currentIndex] < values[compareIndex]) {
-					swap(values, compareIndex, currentIndex);
-					currentIndex--;
-				}
-				compareIndex--;
+			currentIndex = i;
+			while (currentIndex > 0 && values[currentIndex] < values[currentIndex - 1]) {
+				swap(values, currentIndex, currentIndex - 1);
+				currentIndex--;
 			}
 		}
 		return values;

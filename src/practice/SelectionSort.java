@@ -2,7 +2,7 @@
  * Implementation of selection sort
  * Best case - O(n^2)
  * Average case - O(n^2)
- * Worse case - O(n^2)
+ *  Worse case - O(n^2)
  */
 package practice;
 
