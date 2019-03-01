@@ -1,7 +1,7 @@
 /* 
  * Implementation of insertion sort
  * Best case - O(n)
- *  Worse case - O(n^2)
+ * Worse case - O(n^2)
  */
 package practice;
 
