@@ -1,8 +1,0 @@
-strings
-object represented as arrays of chars (primitive)
-String.charAt(index) allows access to char
-
-regex
-+ one or more greedy match
-* zero or more match
-^ no match
