@@ -123,8 +123,15 @@ public class MyLinkedListTester {
 	@Test
 	public void testAddEnd()
 	{
-        // TODO: implement this test
-		
+		try {
+			shortList.add(null);
+			fail("Cannot add null data");
+		}
+		catch (NullPointerException e) {
+
+		}
+
+		assertEquals("add C", true, shortList.add("C"));
 	}
 
 	
@@ -132,7 +139,10 @@ public class MyLinkedListTester {
 	@Test
 	public void testSize()
 	{
-		// TODO: implement this test
+		assertEquals("shortList size", 2, shortList.size());
+		assertEquals("emptyList size", 0, emptyList.size());
+		assertEquals("longerList size", 10, longerList.size());
+		assertEquals("list1 size", 3, list1.size());
 	}
 
 	

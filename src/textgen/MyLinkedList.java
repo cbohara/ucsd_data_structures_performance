@@ -16,7 +16,11 @@ public class MyLinkedList<E> extends AbstractList<E> {
 
 	/** Create a new empty LinkedList */
 	public MyLinkedList() {
-		// TODO: Implement this method
+		this.head = new LLNode<E>(null);
+		this.tail = new LLNode<E>(null);
+		this.size = 0;
+		head.next = tail;
+		tail.prev = head;
 	}
 
 	/**
@@ -25,16 +29,25 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 */
 	public boolean add(E element ) 
 	{
+		if (element == null) {
+			throw new NullPointerException("Cannot add node with null data");
+		}
 		// TODO: Implement this method
-		return false;
+		LLNode<E> newNode = new LLNode<E>(element);
+		newNode.next = this.tail;
+		newNode.prev = this.tail.prev;
+		this.tail.prev = newNode;
+		this.size += 1;
+		return true;
 	}
 
 	/** Get the element at position index 
 	 * @throws IndexOutOfBoundsException if the index is out of bounds. */
-	public E get(int index) 
-	{
-		// TODO: Implement this method.
-		return null;
+	public E get(int index) {
+		if (this.size <= index) {
+			throw new IndexOutOfBoundsException("Invalid index");
+		}
+		return (E) this.head.data;
 	}
 
 	/**
@@ -51,8 +64,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	/** Return the size of the list */
 	public int size() 
 	{
-		// TODO: Implement this method
-		return -1;
+		return this.size;
 	}
 
 	/** Remove a node at the specified index and return its data element.
@@ -96,5 +108,4 @@ class LLNode<E>
 		this.prev = null;
 		this.next = null;
 	}
-
 }

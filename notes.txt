@@ -1,8 +1,67 @@
-strings
-object represented as arrays of chars (primitive)
-String.charAt(index) allows access to char
+---------------
+polymorphism
+---------------
+process objects that share the same superclass as if they were all objects of the superclass
+at execution time the correct subclass version of the method is called
 
-regex
-+ one or more greedy match
-* zero or more match
-^ no match
+compile time vs runtime
+step 1 - compiler has to interpret code 
+step 2 - runtime environment executes interpreted code
+
+compiler can only know the reference/declared type (on left of = )
+JVM uses actual type (on right of = ) to determine which method version to invoke
+
+---------------
+abstract class
+---------------
+cannot create objects of abstract class
+subclasses that inherit from abstract class can be instantiated
+
+if any method within a class is abstract then the whole class must be abstract
+forces subclasses to implement the method
+
+classes can inherit only from one abstract class
+
+abstract class includes interface and implementation
+interface = method signatures which define required behaviors 
+implementation = instance variables and methods that define common behavior
+- you can declare fields that are not static and final
+- define public, protected, and private concrete methods
+
+https://docs.oracle.com/javase/tutorial/java/IandI/abstract.html
+use an abstract class if
+- you want to share code amongst closely related classes
+- you expect that classes that extend your abstract class have many common methods or fields
+- you expect the classes that extend your abstract class require access modifiers other than public
+- you want to declare non-static or non-final fields > 
+   enable you to define methods that can access and modify the state of the object
+   
+ex: AbstractMap is an abstract class
+its subclasses (HashMap, TreeMap) share many methods (get, put, isEmpty) that AbstractMap defines
+
+---------------
+interface
+---------------
+interface only = method signatures that define required behaviors 
+all methods that you declare or define are public
+
+all fields are automatically public, static, and final
+
+classes can inherit from multiple interfaces
+
+use an interface if 
+- you expect unrelated classes would implement your interface
+  ex: Comparable is implemented by many unrelated classes 
+- you want to specify the behavior of a particular data type but not concerned who implements the behavior
+- you want to take advantage of multiple inheritance of type
+
+https://docs.oracle.com/javase/tutorial/java/IandI/createinterface.html
+- agree to fulfill a "contract" that spells out how the software works
+- developer has the freedom to implement as they see fit
+
+
+---------------
+generics
+---------------
+
+
