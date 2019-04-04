@@ -1,9 +1,14 @@
 package textgen;
 
+import document.EfficientDocument;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /** 
  * An implementation of the MTG interface that uses a list of lists.
@@ -27,12 +32,59 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 		rnGenerator = generator;
 	}
 	
+	private List<String> getTokens(String pattern, String sourceText)
+	{
+		ArrayList<String> tokens = new ArrayList<String>();
+		Pattern tokSplitter = Pattern.compile(pattern);
+		Matcher m = tokSplitter.matcher(sourceText);
+		
+		while (m.find()) {
+			tokens.add(m.group());
+		}
+		
+		return tokens;
+	}
 	
+	private boolean isWord(String tok)
+	{
+	    // Note: This is a fast way of checking whether a string is a word
+	    // You probably don't want to change it.
+		return !(tok.indexOf("!") >=0 || tok.indexOf(".") >=0 || tok.indexOf("?")>=0);
+	}
+	
+	private ListNode getNode(String word) {
+		for (ListNode node : wordList) {
+			if (node.getWord().equals(word)) {
+				return node;
+			}
+		}
+		return null;
+	}
+	
+
 	/** Train the generator by adding the sourceText */
 	@Override
 	public void train(String sourceText)
 	{
-		// TODO: Implement this method
+		List<String> words = getTokens("[!?.]+|[a-zA-Z]+", sourceText);
+		String starter = words.get(0);
+		String prevWord = starter;
+
+		for (int i = 1; i < words.size(); i++) {
+			String word = words.get(i);
+			if (!isWord(word)) {
+				continue;
+			}
+
+			ListNode prevWordNode = getNode(prevWord);
+			if (prevWordNode != null) {
+				prevWordNode.addNextWord(word);
+			} else {
+				ListNode newNode = new ListNode(prevWord);
+				wordList.add(newNode);
+			}
+			prevWord = word;
+		}
 	}
 	
 	/** 
