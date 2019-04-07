@@ -64,8 +64,6 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 			} else if (compare > 0) {
 				currNode = currNode.getRight();
 			} else {
-				// found value in currNode - now need to figure out how to remove
-				// if leaf node
 				if (currNode.getLeft() == null && currNode.getRight() == null) {
 					TreeNode<E> parent = currNode.getParent();
 					if (parent.getLeft().getValue().equals(value)) {
@@ -93,16 +91,6 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 			}
 		}
 		return false;
-	}
-	
-	public static void main(String[] args) {
-		BinarySearchTree<Integer> bst = new BinarySearchTree<Integer>(20);
-		bst.insert(5);
-		System.out.println(bst.size);
-		System.out.println(bst.contains(5));
-		bst.delete(5);
-		System.out.println(bst.size);
-		System.out.println(bst.contains(5));
 	}
 }
 
