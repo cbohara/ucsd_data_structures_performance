@@ -42,102 +42,32 @@ public abstract class Document {
 		return tokens;
 	}
 	
-
-	/** Determine if last char is a given char
-	 * @param String word
-	 * @return boolean return true if last letter is 'e'
-	 */
-	private boolean isLastChar(String word, char c) {
-		char lastChar = word.charAt(word.length() - 1);
-		if (lastChar == c) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	/** Determine index to stop checking if character is a vowel
-	 *  because a lone 'e' at the end of the word is not considered
-	 *  a vowel
-	 * @param String word
-	 * @return int representing index to stop iterating through word
-	 */
-	private int stopIndex(String word) {
-		if (isLastChar(word, 'e')) {
-			return word.length() - 1;
-		} else {
-			return word.length();
-		}
-	}
-
-	/** Determines if a character is a vowel
-	 * @param char letter to evaluate
-	 * @return boolean returns true if the letter is a vowel
-	 */
-	private boolean isVowel(char letter) {
-		char[] vowels = { 'a', 'e', 'i', 'o', 'u', 'y', 
-						  'A', 'E', 'I', 'O', 'U', 'Y' };
-		for (char c : vowels) {
-			if (letter == c) {
-				return true;
+	// This is a helper function that returns the number of syllables
+	// in a word.  You should write this and use it in your 
+	// BasicDocument class.
+	protected static int countSyllables(String word)
+	{
+	    //System.out.print("Counting syllables in " + word + "...");
+		int numSyllables = 0;
+		boolean newSyllable = true;
+		String vowels = "aeiouy";
+		char[] cArray = word.toCharArray();
+		for (int i = 0; i < cArray.length; i++)
+		{
+		    if (i == cArray.length-1 && Character.toLowerCase(cArray[i]) == 'e' 
+		    		&& newSyllable && numSyllables > 0) {
+                numSyllables--;
+            }
+		    if (newSyllable && vowels.indexOf(Character.toLowerCase(cArray[i])) >= 0) {
+				newSyllable = false;
+				numSyllables++;
+			}
+			else if (vowels.indexOf(Character.toLowerCase(cArray[i])) < 0) {
+				newSyllable = true;
 			}
 		}
-		return false;
-	}
-	
-	/** This is a helper function that returns the number of syllables
-	 * in a word.  You should write this and use it in your 
-	 * BasicDocument class.
-	 * 
-	 * You will probably NOT need to add a countWords or a countSentences 
-	 * method here.  The reason we put countSyllables here because we'll 
-	 * use it again next week when we implement the EfficientDocument class.
-	 * 
-	 * For reasons of efficiency you should not create Matcher or Pattern 
-	 * objects inside this method. Just use a loop to loop through the 
-	 * characters in the string and write your own logic for counting 
-	 * syllables.
-	 * 
-	 * @param word  The word to count the syllables in
-	 * @return The number of syllables in the given word, according to 
-	 * this rule: Each contiguous sequence of one or more vowels is a syllable, 
-	 *       with the following exception: a lone "e" at the end of a word 
-	 *       is not considered a syllable unless the word has no other syllables. 
-	 *       You should consider y a vowel.
-	 */
-	protected int countSyllables(String word) {
-		if (word.length() == 1 || word.length() == 2) {
-			return 1;
-		}
-
-		if (word.length() == 3 && isLastChar(word, 'e')) {
-			return 1;
-		}
-
-		int syllableCount = 0;
-		char firstChar = word.charAt(0);
-		char previousChar = firstChar;
-		char lastChar = word.charAt(word.length() - 1);
-		int stopIndex = stopIndex(word);
-		for (int i = 1; i < stopIndex; i++) {
-			char currentChar = word.charAt(i);
-			boolean currentCharIsVowel = isVowel(currentChar);
-			boolean previousCharIsVowel = isVowel(previousChar);
-			if (!isVowel(firstChar)) {
-				if (!previousCharIsVowel && currentCharIsVowel) {
-					syllableCount++;
-				}
-			} else {
-				if (previousCharIsVowel && !currentCharIsVowel) {
-					syllableCount++;
-				}
-			}
-			previousChar = currentChar;
-		}
-		if (isVowel(firstChar) && isVowel(lastChar) && !isLastChar(word, 'e')) {
-			syllableCount++;
-		}
-		return syllableCount;
+		//System.out.println( "found " + numSyllables);
+		return numSyllables;
 	}
 	
 	/** A method for testing
@@ -198,12 +128,14 @@ public abstract class Document {
 	}
 	
 	/** return the Flesch readability score of this document */
-	public double getFleschScore() {
-		double numWords = getNumWords();
-		double numSentences = getNumSentences();
-		double numSyllables = getNumSyllables();
-		double wordsPerSentence = numWords / numSentences;
-		double syllablesPerWord = numSyllables / numWords;
-		return 206.835 - (1.015 * wordsPerSentence) - (84.6 * syllablesPerWord);
+	public double getFleschScore()
+	{
+		double wordCount = (double)getNumWords();
+		return 206.835 - (1.015 * ((wordCount)/getNumSentences())) 
+				- (84.6 * (((double)getNumSyllables())/wordCount));
+	
 	}
+	
+	
+	
 }

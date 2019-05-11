@@ -101,6 +101,9 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 */
 	public E remove(int index) 
 	{
+		if (index < 0 || index >= this.size) {
+			throw new IndexOutOfBoundsException("Index out of bounds of list");
+		}
 		LLNode<E> nodeToRemove = getNthNode(index);
 		nodeToRemove.prev.next = nodeToRemove.next;
 		nodeToRemove.next.prev = nodeToRemove.prev;
@@ -117,7 +120,10 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 */
 	public E set(int index, E element) 
 	{
-		if (this.size <= index || index < 0) {
+		if (element == null) {
+			throw new NullPointerException("Cannot add node with null data");
+		}
+		if (index < 0 || index >= this.size) {
 			throw new IndexOutOfBoundsException("Invalid index");
 		}
 

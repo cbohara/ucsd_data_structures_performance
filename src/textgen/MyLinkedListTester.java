@@ -109,6 +109,22 @@ public class MyLinkedListTester {
 	@Test
 	public void testRemove()
 	{
+		try {
+			list1.remove(-1);
+			fail("Cannot remove negative index");
+		}
+		catch (IndexOutOfBoundsException e) {
+
+		}
+
+		try {
+			list1.remove(5);
+			fail("Cannot remove index greater than bound");
+		}
+		catch (IndexOutOfBoundsException e) {
+
+		}
+
 		int sixtyFive = list1.remove(0);
 		assertEquals("Remove: check a is correct ", 65, sixtyFive);
 		assertEquals("Remove: check element 0 is correct ", (Integer)21, list1.get(0));
@@ -119,6 +135,7 @@ public class MyLinkedListTester {
 		assertEquals("Remove: check element 0 is correct ", "B", shortList.get(0));
 		assertEquals("Remove: check size is correct ", 1, shortList.size());
 	}
+	
 	
 	/** Test adding an element into the end of the list, specifically
 	 *  public boolean add(E element)
